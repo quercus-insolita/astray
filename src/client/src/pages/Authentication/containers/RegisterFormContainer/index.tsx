@@ -1,6 +1,7 @@
 import React, { useCallback, memo } from 'react';
-import { Heading, Box } from 'grommet';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { Heading, Box } from 'grommet';
 
 import RegisterForm from '../../components/RegisterForm';
 
@@ -37,6 +38,7 @@ const RegisterFormContainer: React.FC = (): React.ReactElement => {
           Register
         </Heading>
         <RegisterForm handleSubmit={handleSubmit} loading={isSubmitting} />
+        <Link to="/login">I am already member</Link>
       </div>
     </Box>
   );
