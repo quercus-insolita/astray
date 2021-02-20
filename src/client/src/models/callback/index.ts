@@ -1,1 +1,1 @@
-export * from 'models/callback/Callbacks';
+export * from './Callbacks';
