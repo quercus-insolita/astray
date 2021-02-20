@@ -1,5 +1,17 @@
 version: '3.8'
 services:
+  database:
+    image: postgres:13.2-alpine
+    container_name: astray-database
+    restart: always
+    ports:
+      - $POSTGRES_PORT:$POSTGRES_PORT
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      PGDATA: /var/lib/postgresql/data
+    env_file:
+      - .env
   app:
     build:
       context: .
@@ -16,6 +28,13 @@ services:
     environment:
       NODE_ENV: production
       PORT: 29115
+    env_file:
+      - .env
+    depends_on:
+      - database
+volumes:
+  database:
+    name: astray-database
 networks:
   default:
     name: astray-default
