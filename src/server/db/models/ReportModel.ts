@@ -17,47 +17,44 @@ export class ReportModel extends BaseModel implements IReportModel {
   public sex!: Sex
   public date!: Date
   public description!: string
-  
-  static initModel(sequelize: Sequelize) {
-    super.initModelInternal<ReportModel>(
-      {
-        reportType: {
-          type: DataTypes.ENUM(...Object.values(ReportType)),
-        },
-        petType: {
-          type: DataTypes.ENUM(...Object.values(PetType)),
-          defaultValue: PetType.Other,
-        },
-        color: {
-          type: DataTypes.ENUM(...Object.values(Color)),
-          defaultValue: Color.NotSure,
-        },
-        // TODO: add coords
-        city: {
-          type: DataTypes.STRING,
-        },
-        sex: {
-          type: DataTypes.ENUM(...Object.values(Sex)),
-          defaultValue: Sex.NotSure,
-        },
-        date: {
-          type: DataTypes.STRING,
-          defaultValue: String(Sequelize.col('createdAt'))
-        },
-        description: {
-          type: DataTypes.STRING,
-          defaultValue: '',
-        },
-      },
-      {
-        tableName: 'reports',
-        sequelize
-      },
-    )  
-  }
 
   static associate(models: Models) {
-    this.hasMany(models.Contact, { foreignKey: 'reportId' })
-    this.hasMany(models.Image, { foreignKey: 'reportId' })
+    ReportModel.hasMany(models.Contact, { foreignKey: 'reportId' })
+    ReportModel.hasMany(models.Image, { foreignKey: 'reportId' })
   }
 }
+
+ReportModel.initModel<ReportModel>(
+  {
+    reportType: {
+      type: DataTypes.ENUM(...Object.values(ReportType)),
+    },
+    petType: {
+      type: DataTypes.ENUM(...Object.values(PetType)),
+      defaultValue: PetType.Other,
+    },
+    color: {
+      type: DataTypes.ENUM(...Object.values(Color)),
+      defaultValue: Color.NotSure,
+    },
+    // TODO: add coords
+    city: {
+      type: DataTypes.STRING,
+    },
+    sex: {
+      type: DataTypes.ENUM(...Object.values(Sex)),
+      defaultValue: Sex.NotSure,
+    },
+    date: {
+      type: DataTypes.STRING,
+      defaultValue: String(Sequelize.col('createdAt'))
+    },
+    description: {
+      type: DataTypes.STRING,
+      defaultValue: '',
+    },
+  },
+  {
+    tableName: 'reports',
+  },
+)

@@ -1,5 +1,4 @@
-import { Sequelize } from 'sequelize'
-import { initSequelize, Db, initDb } from './db'
+import { Db, initDb, sequelize } from './db'
 import { AuthService } from './services/AuthService'
 
 export type AppContext = {
@@ -8,8 +7,9 @@ export type AppContext = {
 }
 
 export const createAppContext = async (): Promise<AppContext> => {
-    const sequelize = await initSequelize()
-    const db = initDb(sequelize)
+    await sequelize.sync()
+    const db = initDb()
+    
     const authService = new AuthService(db)
 
     return {

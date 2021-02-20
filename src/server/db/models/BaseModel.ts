@@ -7,6 +7,7 @@ import {
   Sequelize,
 } from 'sequelize'
 
+import { sequelize } from '../sequelize'
 import { Models } from '..'
 import { PREFER_RESTRICT_NULL } from '../config'
 
@@ -19,7 +20,7 @@ export interface IBaseModel {
 export interface IBaseModelConstructor extends ModelCtor<BaseModel> {
   associate?(models: Models): void
   associations: Record<string, any>
-  initModel(sequelize: Sequelize): void
+  initModel(attributes: ModelAttributes, options: Partial<InitOptions>): void
 }
 
 export abstract class BaseModel extends Model implements IBaseModel {
@@ -27,9 +28,9 @@ export abstract class BaseModel extends Model implements IBaseModel {
   readonly createdAt!: Date
   updatedAt!: Date
 
-  protected static initModelInternal<M extends BaseModel = BaseModel>(
+  static initModel<M extends BaseModel = BaseModel>(
     attributes: ModelAttributes,
-    options: InitOptions<M>,
+    options: Partial<InitOptions<M>>,
   ) {
     if (PREFER_RESTRICT_NULL) {
       attributes = Object.entries(attributes).reduce<ModelAttributes>(
@@ -46,8 +47,10 @@ export abstract class BaseModel extends Model implements IBaseModel {
         {},
       )
     }
+    console.log('%j', sequelize)
     super.init.call(this as any, attributes, {
       underscored: true,
+      sequelize,
       ...options,
     } as any)
   }

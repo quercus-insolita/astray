@@ -16,45 +16,32 @@ export class UserModel extends BaseModel implements IUserModel {
   public password!: string
 
   static associate(models: Models) {
-    this.hasMany(models.Report, { foreignKey: 'userId' })
-  }
-
-  static initModel(sequelize: Sequelize) {
-    super.initModelInternal<UserModel>(
-      {
-        name: {
-          type: DataTypes.STRING,
-        },
-        email: {
-          type: DataTypes.STRING,
-          unique: {
-            name: 'email',
-            msg: ValidationErrorMessage.NOT_UNIQUE,
-          },
-          validate: {
-            isEmail: {
-              msg: ValidationErrorMessage.NOT_EMAIL,
-            },
-          },
-        },
-        password: {
-          type: DataTypes.STRING,
-          validate: {
-            min: {
-              args: [5],
-              msg: ValidationErrorMessage.TOO_SHORT,
-            },
-            max: {
-              args: [20],
-              msg: ValidationErrorMessage.TOO_LONG,
-            }
-          },
-        },
-      },
-      {
-        tableName: 'users',
-        sequelize
-      },
-    )  
+    UserModel.hasMany(models.Report, { foreignKey: 'userId' })
   }
 }
+
+UserModel.initModel<UserModel>(
+  {
+    name: {
+      type: DataTypes.STRING,
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: {
+        name: 'email',
+        msg: ValidationErrorMessage.NOT_UNIQUE,
+      },
+      validate: {
+        isEmail: {
+          msg: ValidationErrorMessage.NOT_EMAIL,
+        },
+      },
+    },
+    password: {
+      type: DataTypes.STRING,
+    },
+  },
+  {
+    tableName: 'users',
+  },
+)

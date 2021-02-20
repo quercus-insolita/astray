@@ -7,6 +7,7 @@ export enum ValidationErrorMessage {
   NOT_UNIQUE = 'notUnique',
   TOO_LONG = 'tooLong',
   TOO_SHORT = 'tooShort',
+  LENGTH_OUT_OF_RANGE = 'lengthOutOfRange',
 }
 
 export const BCRYPT_SALT_ROUNDS = process.env.BCRYPT_HASHING_ROUNDS || 2

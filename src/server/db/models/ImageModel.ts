@@ -12,21 +12,18 @@ export interface IImageModelConstructor extends IBaseModelConstructor {
 export class ImageModel extends BaseModel implements IImageModel {
   public url!: string
   public hash!: string
-
-  static initModel(sequelize: Sequelize) {
-    ImageModel.initModelInternal<ImageModel>(
-      {
-        url: {
-          type: DataTypes.STRING,
-        },
-        hash: {
-          type: DataTypes.STRING,
-        },
-      },
-      {
-        tableName: 'images',
-        sequelize
-      },
-    )  
-  }
 }
+
+ImageModel.initModel<ImageModel>(
+  {
+    url: {
+      type: DataTypes.STRING,
+    },
+    hash: {
+      type: DataTypes.STRING,
+    },
+  },
+  {
+    tableName: 'images',
+  },
+)

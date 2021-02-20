@@ -17,10 +17,8 @@ type AuthenticateUserReturnType = {
 type RegisterUserReturnType = AuthenticateUserReturnType
 
 export class AuthService extends Loggable {
-  protected readonly entityName = 'auth service'
-
   constructor(private readonly db: Db) {
-    super()
+    super('auth service')
   }
 
   async generateToken(data: any) {
@@ -44,18 +42,14 @@ export class AuthService extends Loggable {
         user: { email, name, id }
       }
     } catch (e) {
-      this.logger.info(e)
+      this.logger.error(e)
       let errorMessage = DEFAULT_ERROR_MESSAGE
       
-      if (e instanceof ValidationError) {  
+      if (e instanceof ValidationError) { 
         if (e.errors.find(({ message, path }) => path === 'email' && message === ValidationErrorMessage.NOT_EMAIL)) {
           errorMessage = 'Невалідний e-mail'
         } else if (e.errors.find(({ message, path }) => path === 'email' && message === ValidationErrorMessage.NOT_UNIQUE)) {
           errorMessage = 'Такий e-mail вже зайнятий'
-        } else if (e.errors.find(({ message, path }) => path === 'password' && message === ValidationErrorMessage.TOO_SHORT)) {
-          errorMessage = 'Надто короткий пароль'
-        } else if (e.errors.find(({ message, path }) => path === 'password' && message === ValidationErrorMessage.TOO_LONG)) {
-          errorMessage = 'Надто довгий пароль'
         }
       }
 
