@@ -2,11 +2,16 @@ import React, { useState, useContext, createContext, useMemo } from 'react';
 
 import { filterReportsListing } from '../../utils/filtering.utils';
 
+import { IBindingCallback1 } from '../../../../models/callback';
 import { ViewType } from '../../models/view';
 import { IListingFilters } from '../../models/filters';
 import { IReport } from '../../../../models/report';
 
-interface ReportsListingContextData {}
+interface ReportsListingContextData {
+  viewType: ViewType;
+  updateFilter: IBindingCallback1<IListingFilters>;
+  updateViewType: IBindingCallback1<ViewType>;
+}
 
 export const ReportsListingContext = createContext<ReportsListingContextData>(
   {} as ReportsListingContextData

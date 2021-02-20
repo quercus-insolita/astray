@@ -1,7 +1,45 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import map from 'lodash/map';
 
-const ReportsListing: React.FC = (): React.ReactElement => {
-  return <div />;
+import ReportCardGrid from '../../../../components/ReportCardGrid';
+import ReportCardList from '../../../../components/ReportCardList';
+
+import { IReport } from '../../../../models/report';
+import { ViewType } from '../../models/view';
+
+interface IReportsListingProps {
+  listings: IReport[];
+  viewType: ViewType;
+}
+
+const ReportsListing: React.FC<IReportsListingProps> = ({
+  listings,
+  viewType
+}): React.ReactElement => {
+  const renderEmptyComponent = () => (
+    <div>
+      <p>Не знайдено.</p>
+    </div>
+  );
+
+  const renderListings = useCallback(
+    () => (
+      <div className={viewType === ViewType.GridView ? '' : ''}>
+        {map(listings, (listing, index) => (
+          <>
+            {viewType === ViewType.GridView ? (
+              <ReportCardGrid key={index} listing={listing} />
+            ) : (
+              <ReportCardList key={index} listing={listing} />
+            )}
+          </>
+        ))}
+      </div>
+    ),
+    [listings, viewType]
+  );
+
+  return <div>{listings.length ? renderListings() : renderEmptyComponent()}</div>;
 };
 
 export default ReportsListing;
