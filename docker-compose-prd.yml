@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: production
+    image: astray-app
+    container_name: astray-app
+    command: node dist/index.js
+    ports:
+      - 29115:29115
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      NODE_ENV: production
+      PORT: 29115
+networks:
+  default:
+    name: astray-default

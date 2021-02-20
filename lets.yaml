@@ -1,0 +1,10 @@
+shell: bash
+commands:
+  build:
+    description: Build app environment
+    cmd: docker-compose -f docker-compose-dev.yml build app
+  run:
+    description: Launch the ecosystem
+    cmd: |
+      docker-compose -f docker-compose-dev.yml up database app
+      docker-compose -f docker-compose-dev.yml down

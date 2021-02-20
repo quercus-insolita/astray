@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  database:
+    image: postgres:13.2-alpine
+    container_name: astray-database
+    restart: always
+    ports:
+      - 5438:5438
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: astray
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: development
+    image: astray-app
+    container_name: astray-app
+    command: npm run start
+    ports:
+      - 29115:29115
+    volumes:
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+      - ./tsconfig.json:/app/tsconfig.json
+    environment:
+      NODE_ENV: development
+      PORT: 29115
+      DATABASE_URL: postgres://postgres:postgres@astray-database:5438/astray
+    depends_on:
+      - database
+volumes:
+  database:
+    name: astray-database
+networks:
+  default:
+    name: astray-default
