@@ -1,7 +1,7 @@
 import { DataTypes, Sequelize } from 'sequelize'
 import { User } from '../../common/domain'
 import { BaseModel, IBaseModel, IBaseModelConstructor } from './BaseModel'
-import { ProjectModelsStore } from '../store'
+import { Models } from '..'
 import { ValidationErrorMessage } from '../../common/constants'
 
 export interface IUserModel extends IBaseModel, User {}
@@ -11,10 +11,11 @@ export interface IUserModelConstructor extends IBaseModelConstructor {
 }
 
 export class UserModel extends BaseModel implements IUserModel {
+  public name!: string
   public email!: string
   public password!: string
 
-  static associate(models: ProjectModelsStore) {
+  static associate(models: Models) {
     this.hasMany(models.Report, { foreignKey: 'userId' })
   }
 
@@ -26,7 +27,10 @@ export class UserModel extends BaseModel implements IUserModel {
         },
         email: {
           type: DataTypes.STRING,
-          unique: true,
+          unique: {
+            name: 'email',
+            msg: ValidationErrorMessage.NOT_UNIQUE,
+          },
           validate: {
             isEmail: {
               msg: ValidationErrorMessage.NOT_EMAIL,

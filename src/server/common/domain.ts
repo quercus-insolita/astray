@@ -1,5 +1,6 @@
 // at least one contact channel required
 export type User = {
+  name: string
   email: string
   password: string
 }
@@ -28,7 +29,7 @@ export enum ReportType {
 export enum Sex {
   Male = 'male',
   Female = 'female',
-  NotSure = 'not_sure',
+  NotSure = 'notSure',
 }
 
 export enum Color {
@@ -37,11 +38,11 @@ export enum Color {
   Ginger = 'ginger',
   Grey = 'grey',
   White = 'white',
-  NotSure = 'not_sure',
+  NotSure = 'notSure',
 }
 
 export type Report = {
-  reportType: ReportType
+  type: ReportType
   petType: PetType
   location: string
   sex: Sex

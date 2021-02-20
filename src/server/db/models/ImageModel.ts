@@ -1,7 +1,7 @@
 import { DataTypes, Sequelize } from 'sequelize'
 import { Image } from '../../common/domain'
 import { BaseModel, IBaseModel, IBaseModelConstructor } from './BaseModel'
-import { ProjectModelsStore } from '../store'
+import { Models } from '..'
 
 export interface IImageModel extends IBaseModel, Image {}
 

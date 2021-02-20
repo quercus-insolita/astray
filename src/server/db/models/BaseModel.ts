@@ -7,7 +7,7 @@ import {
   Sequelize,
 } from 'sequelize'
 
-import { ProjectModelsStore } from '../store'
+import { Models } from '..'
 import { PREFER_RESTRICT_NULL } from '../config'
 
 export interface IBaseModel {
@@ -17,7 +17,7 @@ export interface IBaseModel {
 }
 
 export interface IBaseModelConstructor extends ModelCtor<BaseModel> {
-  associate?(models: ProjectModelsStore): void
+  associate?(models: Models): void
   associations: Record<string, any>
   initModel(sequelize: Sequelize): void
 }
@@ -46,6 +46,9 @@ export abstract class BaseModel extends Model implements IBaseModel {
         {},
       )
     }
-    super.init.call(this as any, attributes, options as any)
+    super.init.call(this as any, attributes, {
+      underscored: true,
+      ...options,
+    } as any)
   }
 }

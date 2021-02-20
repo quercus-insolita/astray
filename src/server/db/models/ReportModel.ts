@@ -1,7 +1,7 @@
 import { DataTypes, Sequelize } from 'sequelize'
 import { Report, ReportType, PetType, Color, Sex } from '../../common/domain'
 import { BaseModel, IBaseModel, IBaseModelConstructor } from './BaseModel'
-import { ProjectModelsStore } from '../store'
+import { Models } from '..'
 
 export interface IReportModel extends IBaseModel, Report {}
 
@@ -10,7 +10,7 @@ export interface IReportModelConstructor extends IBaseModelConstructor {
 }
 
 export class ReportModel extends BaseModel implements IReportModel {
-  public reportType!: ReportType
+  public type!: ReportType
   public petType!: PetType
   public color!: Color
   public location!: string
@@ -56,7 +56,7 @@ export class ReportModel extends BaseModel implements IReportModel {
     )  
   }
 
-  static associate(models: ProjectModelsStore) {
+  static associate(models: Models) {
     this.hasMany(models.Contact, { foreignKey: 'reportId' })
     this.hasMany(models.Image, { foreignKey: 'reportId' })
   }
