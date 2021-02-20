@@ -1,6 +1,7 @@
 import React from 'react';
+import { Box, Card, CardBody, Image, Paragraph } from 'grommet';
 
-import { Box, Card, CardBody, Heading, Image, Paragraph } from 'grommet';
+import './styles.css';
 
 interface IReportCardGridProps {
   listing: any;
@@ -8,8 +9,8 @@ interface IReportCardGridProps {
 
 const ReportCardGrid: React.FC<IReportCardGridProps> = ({ listing }): React.ReactElement => {
   return (
-    <Box pad="medium" align="start">
-      <Card elevation="medium" width="medium">
+    <Box pad="small" align="start">
+      <Card elevation="medium" width="medium" className="report-card-grid">
         <CardBody height="small">
           <Image fit="cover" src="//v2.grommet.io/assets/IMG_4245.jpg" a11yTitle="bridge" />
         </CardBody>

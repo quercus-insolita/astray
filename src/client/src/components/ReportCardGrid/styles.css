@@ -1,0 +1,7 @@
+.report-card-grid {
+  transition: transform 0.3s;
+}
+
+.report-card-grid:hover {
+  transform: scale(1.05);
+}

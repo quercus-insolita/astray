@@ -5,6 +5,7 @@ import Paginator from '../../../../../../components/Paginator';
 import { useReportsListing } from '../../../../contexts/ReportsListingContext';
 import ReportsListing from '../../../../components/ReportsListing';
 import ListingFilters from '../../../../components/ListingFilters';
+import ViewTypeButtons from '../../components/ViewTypeButtons';
 
 import { IListingFilters } from '../../../../models/filters';
 
@@ -31,16 +32,19 @@ const ReportsListingViewContainer: React.FC = (): React.ReactElement => {
   return (
     <div>
       <ListingFilters updateFilter={handleUpdateFilter} totalItems={0} />
-      <ReportsListing listings={currentListings} viewType={viewType} />
-      {nextEnabled && (
-        <div>
-          <Paginator
-            totalPages={totalPages}
-            currentPage={currentPage}
-            changePageHandler={handlePageChange}
-          />
-        </div>
-      )}
+      <div>
+        <ViewTypeButtons viewType={viewType} updateViewType={updateViewType} />
+        <ReportsListing listings={currentListings} viewType={viewType} />
+        {nextEnabled && (
+          <div>
+            <Paginator
+              totalPages={totalPages}
+              currentPage={currentPage}
+              changePageHandler={handlePageChange}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
