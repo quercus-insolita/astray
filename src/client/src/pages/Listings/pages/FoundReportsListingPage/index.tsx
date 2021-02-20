@@ -1,7 +1,11 @@
 import React from 'react';
 
+import ReportsListingContainer from '../../containers/ReportsListingContainer';
+
+import { ReportType } from '../../models/reports';
+
 const FoundReportsListingPage: React.FC = (): React.ReactElement => {
-  return <div>hi</div>;
+  return <ReportsListingContainer type={ReportType.Found} />;
 };
 
 export default FoundReportsListingPage;
