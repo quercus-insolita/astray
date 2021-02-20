@@ -13,16 +13,16 @@ const NavigationHeader: React.FC = (): React.ReactElement => {
             <Menu
               label="Click me"
               items={[
-                { label: 'This is', onClick: () => {} },
-                { label: 'The Menu', onClick: () => {} },
-                { label: 'Component', onClick: () => {} }
+                { label: 'Домашня сторінка', onClick: () => {} },
+                { label: 'Каталог тварин', onClick: () => {} },
+                { label: 'Розмістити оголошення', onClick: () => {} }
               ]}
             />
           ) : (
             <Nav direction="row">
-              <Anchor href="#" label="This is" />
-              <Anchor href="#" label="The Nav" />
-              <Anchor href="#" label="Component" />
+              <Anchor href="/" label="Домашня сторінка" />
+              <Anchor href="/search" label="Каталог тварин" />
+              <Anchor href="/report" label="Розмістити оголошення" />
             </Nav>
           )
         }

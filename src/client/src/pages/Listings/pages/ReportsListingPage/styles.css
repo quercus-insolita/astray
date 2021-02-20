@@ -1,0 +1,12 @@
+.reports-card-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.reports-card {
+  transition: transform 0.3s;
+}
+
+.reports-card:hover {
+  transform: scale(1.05);
+}
