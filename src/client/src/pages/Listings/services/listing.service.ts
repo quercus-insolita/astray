@@ -1,9 +1,8 @@
 import { callWebApi } from '../../../helpers/webApi.helper';
 
-export const getReportsList = async data => {
+export const getReportsList = async ({ type }) => {
   return await callWebApi({
-    endpoint: 'reports',
-    requestData: data,
+    endpoint: `reports?type=${type}`,
     type: 'GET'
   });
 };

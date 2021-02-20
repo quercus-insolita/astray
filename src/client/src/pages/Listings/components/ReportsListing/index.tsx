@@ -7,6 +7,8 @@ import ReportCardList from '../../../../components/ReportCardList';
 import { IReport } from '../../../../models/report';
 import { ViewType } from '../../models/view';
 
+import './styles.css';
+
 interface IReportsListingProps {
   listings: IReport[];
   viewType: ViewType;
@@ -24,7 +26,9 @@ const ReportsListing: React.FC<IReportsListingProps> = ({
 
   const renderListings = useCallback(
     () => (
-      <div className={viewType === ViewType.GridView ? '' : ''}>
+      <div
+        className={viewType === ViewType.GridView ? 'grid-view-container' : 'card-view-container'}
+      >
         {map(listings, (listing, index) => (
           <>
             {viewType === ViewType.GridView ? (
@@ -39,7 +43,11 @@ const ReportsListing: React.FC<IReportsListingProps> = ({
     [listings, viewType]
   );
 
-  return <div>{listings.length ? renderListings() : renderEmptyComponent()}</div>;
+  return (
+    <div className="listing-container">
+      {listings.length ? renderListings() : renderEmptyComponent()}
+    </div>
+  );
 };
 
 export default ReportsListing;

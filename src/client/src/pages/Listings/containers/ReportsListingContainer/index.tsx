@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { Container } from 'react-bootstrap';
 
 import LoaderWrapper from '../../../../components/LoaderWrapper';
 import { ReportsListingProvider } from '../../contexts/ReportsListingContext';
@@ -34,9 +35,11 @@ const ReportsListingContainer: React.FC<IReportsListingContainerProps> = ({
 
   return (
     <LoaderWrapper loading={loading}>
-      <ReportsListingProvider data={[]}>
-        <ReportsListingViewContainer />
-      </ReportsListingProvider>
+      <Container className="mt-2 mb-4">
+        <ReportsListingProvider data={[]}>
+          <ReportsListingViewContainer />
+        </ReportsListingProvider>
+      </Container>
     </LoaderWrapper>
   );
 };
