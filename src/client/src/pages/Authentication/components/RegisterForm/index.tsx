@@ -1,17 +1,16 @@
 import React from 'react';
 import { withFormik, FormikProps } from 'formik';
 import { Box, Button, Form, FormField, TextInput } from 'grommet';
-import { Lock, MailOption } from 'grommet-icons';
+import { Lock, User, MailOption } from 'grommet-icons';
 
-import { IUserCredentials } from '../../models/user';
 import { validationSchema } from './validationSchema';
 
-interface ILoginFormProps {
+interface IRegisterFormProps {
   handleSubmit: any;
   loading: boolean;
 }
 
-const LoginForm: React.FC<ILoginFormProps & FormikProps<IUserCredentials>> = ({
+const RegisterForm: React.FC<IRegisterFormProps & FormikProps<any>> = ({
   values,
   touched,
   errors,
@@ -20,8 +19,11 @@ const LoginForm: React.FC<ILoginFormProps & FormikProps<IUserCredentials>> = ({
   handleSubmit,
   loading
 }): React.ReactElement => {
-  const emailError = errors.email && touched.email;
   const passwordError = errors.password && touched.password;
+  const emailError = errors.email && touched.email;
+  const nameError = errors.name && touched.name;
+  const confirmPasswordError = errors.confirmPassword && touched.confirmPassword;
+  const disabled = loading || passwordError || emailError || nameError || confirmPasswordError;
 
   return (
     <Box width="medium">
@@ -29,6 +31,18 @@ const LoginForm: React.FC<ILoginFormProps & FormikProps<IUserCredentials>> = ({
     // @ts-ignore */}
       <Form onSubmit={handleSubmit}>
         <Box margin={{ bottom: '30px' }}>
+          <FormField htmlFor="name" error={nameError && errors.name}>
+            <TextInput
+              id="name"
+              icon={<User />}
+              name="name"
+              type="text"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Your name"
+            />
+          </FormField>
           <FormField htmlFor="email" error={emailError && errors.email}>
             <TextInput
               id="email"
@@ -44,13 +58,28 @@ const LoginForm: React.FC<ILoginFormProps & FormikProps<IUserCredentials>> = ({
           <FormField htmlFor="password" error={passwordError && errors.password}>
             <TextInput
               id="password"
-              type="password"
               icon={<Lock />}
               name="password"
+              type="password"
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="Password"
+            />
+          </FormField>
+          <FormField
+            htmlFor="confirmPassword"
+            error={confirmPasswordError && errors.confirmPassword}
+          >
+            <TextInput
+              id="confirmPassword"
+              icon={<Lock />}
+              name="confirmPassword"
+              type="password"
+              value={values.confirmPassword}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Repeat your password"
             />
           </FormField>
         </Box>
@@ -58,8 +87,8 @@ const LoginForm: React.FC<ILoginFormProps & FormikProps<IUserCredentials>> = ({
           type="submit"
           primary={true}
           color="neutral-3"
-          label="Log in"
-          disabled={loading}
+          label="Register"
+          disabled={!!disabled}
           margin={{ bottom: '30px' }}
         />
       </Form>
@@ -67,11 +96,13 @@ const LoginForm: React.FC<ILoginFormProps & FormikProps<IUserCredentials>> = ({
   );
 };
 
-export default withFormik<ILoginFormProps, IUserCredentials>({
+export default withFormik<any, any>({
   mapPropsToValues: () => ({
     email: '',
-    password: ''
+    name: '',
+    password: '',
+    confirmPassword: ''
   }),
   handleSubmit: (values, bag) => bag.props.handleSubmit(values),
   validationSchema
-})(LoginForm);
+})(RegisterForm);

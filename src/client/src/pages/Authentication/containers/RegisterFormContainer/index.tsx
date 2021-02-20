@@ -1,28 +1,27 @@
 import React, { useCallback, memo } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Heading, Box } from 'grommet';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-import LoginForm from '../../components/LoginForm';
+import RegisterForm from '../../components/RegisterForm';
 
-import { IUserCredentials } from '../../models/user';
 import { RootState } from '../../../../reducers';
 
 import { checkIfLoading } from '../../../../store/selectors';
-import { loginUserRoutine } from '../../routines';
+import { registerUserRoutine } from '../../routines';
 
-const LoginFormContainer: React.FC = (): React.ReactElement => {
+const RegisterFormContainer: React.FC = (): React.ReactElement => {
   const dispatch = useDispatch();
   const isSubmitting = useSelector(
-    (state: RootState) => checkIfLoading(state, loginUserRoutine.TRIGGER),
+    (state: RootState) => checkIfLoading(state, registerUserRoutine.TRIGGER),
     shallowEqual
   );
 
   const handleSubmit = useCallback(
-    ({ email, password }: IUserCredentials) => {
+    ({ email, name, password }) => {
       dispatch(
-        loginUserRoutine({
+        registerUserRoutine({
           email: email.trim(),
+          name,
           password
         })
       );
@@ -35,13 +34,12 @@ const LoginFormContainer: React.FC = (): React.ReactElement => {
       <div>
         {/* {error && <ErrorMessage error={error} />} */}
         <Heading level="2" margin={{ bottom: '30px' }}>
-          Sign in
+          Register
         </Heading>
-        <LoginForm handleSubmit={handleSubmit} loading={isSubmitting} />
-        <Link to="/register">Create an account</Link>
+        <RegisterForm handleSubmit={handleSubmit} loading={isSubmitting} />
       </div>
     </Box>
   );
 };
 
-export default memo(LoginFormContainer);
+export default memo(RegisterFormContainer);

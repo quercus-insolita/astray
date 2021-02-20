@@ -7,3 +7,11 @@ export const loginUser = async data => {
     type: 'POST'
   });
 };
+
+export const registerUser = async data => {
+  return await callWebApi({
+    endpoint: 'registration',
+    requestData: data,
+    type: 'POST'
+  });
+};

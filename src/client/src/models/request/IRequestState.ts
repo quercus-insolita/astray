@@ -6,7 +6,5 @@ interface IActionState {
 export interface IRequestState {
   loader: {
     actions: IActionState[];
-    refreshing: string[];
-    fulfilled: IActionState[];
   };
 }
