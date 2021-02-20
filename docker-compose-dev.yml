@@ -1,9 +1,8 @@
 version: '3.8'
 services:
   database:
-    image: postgres:13.2-alpine
+    image: postgres:13.2
     container_name: astray-database
-    restart: always
     ports:
       - 5438:5438
     volumes:
