@@ -1,9 +1,8 @@
 import { DataTypes, Sequelize } from 'sequelize'
+import { User } from '../../common/domain'
 import { BaseModel, IBaseModel, IBaseModelConstructor } from './BaseModel'
 import { ProjectModelsStore } from '../store'
-const Maintenance = {} as IBaseModel & IBaseModelConstructor
-const Contribution = {} as IBaseModel & IBaseModelConstructor
-type User = {}
+import { ValidationErrorMessage } from '../../common/constants'
 
 export interface IUserModel extends IBaseModel, User {}
 
@@ -12,67 +11,46 @@ export interface IUserModelConstructor extends IBaseModelConstructor {
 }
 
 export class UserModel extends BaseModel implements IUserModel {
-  public name?: string
   public email!: string
-  public username!: string
   public password!: string
-  public status?: string
-  public guildId?: number
 
   static associate(models: ProjectModelsStore) {
-    this.hasMany(models.Device, { foreignKey: 'userId' })
-    this.hasMany(models.Event, { foreignKey: 'userId' })
-    this.associations.Product = this.belongsTo(models.Product, {
-      foreignKey: 'productId',
-    })
-    this.belongsToMany(models.OpenSourceProject, {
-      through: Maintenance,
-      foreignKey: 'maintainerId',
-      otherKey: 'projectId',
-    })
-    this.belongsToMany(models.OpenSourceProject, {
-      through: Contribution,
-      foreignKey: 'contributorId',
-      otherKey: 'projectId',
-    })
+    this.hasMany(models.Report, { foreignKey: 'userId' })
   }
-}
 
-export const initUserModel = (sequelize: Sequelize) => {
-  UserModel.initModel<UserModel>(
-    {
-      name: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      email: {
-        type: DataTypes.STRING,
-        unique: true,
-        validate: {
-          isEmail: {
-            msg: 'isNotEmail',
+  static initModel(sequelize: Sequelize) {
+    super.initModelInternal<UserModel>(
+      {
+        name: {
+          type: DataTypes.STRING,
+        },
+        email: {
+          type: DataTypes.STRING,
+          unique: true,
+          validate: {
+            isEmail: {
+              msg: ValidationErrorMessage.NOT_EMAIL,
+            },
+          },
+        },
+        password: {
+          type: DataTypes.STRING,
+          validate: {
+            min: {
+              args: [5],
+              msg: ValidationErrorMessage.TOO_SHORT,
+            },
+            max: {
+              args: [20],
+              msg: ValidationErrorMessage.TOO_LONG,
+            }
           },
         },
       },
-      username: {
-        type: DataTypes.STRING,
-        unique: true,
+      {
+        tableName: 'users',
+        sequelize
       },
-      password: {
-        type: DataTypes.STRING,
-      },
-      status: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      guildId: {
-        type: DataTypes.BIGINT,
-        allowNull: true,
-      },
-    },
-    {
-      tableName: 'users',
-      sequelize
-    },
-  )  
+    )  
+  }
 }

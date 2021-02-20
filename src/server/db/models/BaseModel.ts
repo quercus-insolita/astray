@@ -4,6 +4,7 @@ import {
   ModelAttributeColumnOptions,
   InitOptions,
   ModelAttributes,
+  Sequelize,
 } from 'sequelize'
 
 import { ProjectModelsStore } from '../store'
@@ -16,9 +17,9 @@ export interface IBaseModel {
 }
 
 export interface IBaseModelConstructor extends ModelCtor<BaseModel> {
-  associate(models: ProjectModelsStore): void
+  associate?(models: ProjectModelsStore): void
   associations: Record<string, any>
-  initModel(attributes: ModelAttributes, options: Partial<InitOptions>): void
+  initModel(sequelize: Sequelize): void
 }
 
 export abstract class BaseModel extends Model implements IBaseModel {
@@ -26,7 +27,7 @@ export abstract class BaseModel extends Model implements IBaseModel {
   readonly createdAt!: Date
   updatedAt!: Date
 
-  static initModel<M extends BaseModel = BaseModel>(
+  protected static initModelInternal<M extends BaseModel = BaseModel>(
     attributes: ModelAttributes,
     options: InitOptions<M>,
   ) {

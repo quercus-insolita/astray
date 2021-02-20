@@ -1,5 +1,4 @@
 import { Sequelize } from 'sequelize'
-import { RESET_DB } from './config'
 
 export const initSequelize = () => {
   const connectionString = process.env.DATABASE_URL as string

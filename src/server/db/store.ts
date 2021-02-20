@@ -1,35 +1,28 @@
 import { Sequelize } from 'sequelize/types'
-import { IBaseModel, IBaseModelConstructor } from './models/BaseModel'
-import {
-  UserModel,
-  IUserModel,
-  IUserModelConstructor,
-} from './models/UserModel'
+import { IContactModelConstructor, ContactModel } from './models/ContactModel'
+import { IReportModelConstructor, ReportModel } from './models/ReportModel'
+import { UserModel, IUserModelConstructor } from './models/UserModel'
+import { ImageModel, IImageModelConstructor } from './models/ImageModel'
 
 export interface ProjectModelsStore {
-  User: IUserModel & IUserModelConstructor
-  Guild: IBaseModel & IBaseModelConstructor
-  OpenSourceProject: IBaseModel & IBaseModelConstructor
-  Device: IBaseModel & IBaseModelConstructor
-  Event: IBaseModel & IBaseModelConstructor
-  Product: IBaseModel & IBaseModelConstructor
-  Company: IBaseModel & IBaseModelConstructor
+  User: IUserModelConstructor
+  Report: IReportModelConstructor
+  Contact: IContactModelConstructor
+  Image: IImageModelConstructor
 }
 
 export const models: ProjectModelsStore = {
-  User: UserModel as IUserModel & IUserModelConstructor,
-  Guild: {} as IBaseModel & IBaseModelConstructor,
-  OpenSourceProject: {} as IBaseModel & IBaseModelConstructor,
-  Device: {} as IBaseModel & IBaseModelConstructor,
-  Event: {} as IBaseModel & IBaseModelConstructor,
-  Product: {} as IBaseModel & IBaseModelConstructor,
-  Company: {} as IBaseModel & IBaseModelConstructor,
+  User: UserModel,
+  Report: ReportModel,
+  Contact: ContactModel,
+  Image: ImageModel,
 }
 
 export const initModels = (sequelize: Sequelize) => {
   (Object.keys(models) as (keyof ProjectModelsStore)[]).forEach((modelName) => {
-    // TODO: pass sequelize to initModels
-    models[modelName].associate && models[modelName].associate(models)
+    const { initModel, associate } = models[modelName]
+    initModel(sequelize)
+    associate?.(models)
   })
   return models
 }
