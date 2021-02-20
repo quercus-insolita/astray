@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux';
 
-const rootReducer = combineReducers({});
+import { currentUser } from '../shared/User/reducers';
+import { requestsReducer } from './requestsReducer';
+
+const rootReducer = combineReducers({ currentUser, requests: requestsReducer });
 
 export default rootReducer;
 

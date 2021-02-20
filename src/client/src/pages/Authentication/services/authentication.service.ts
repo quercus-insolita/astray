@@ -7,10 +7,3 @@ export const loginUser = async data => {
     type: 'POST'
   });
 };
-
-export const getCurrentUser = async () => {
-  return await callWebApi({
-    endpoint: 'user',
-    type: 'GET'
-  });
-};
