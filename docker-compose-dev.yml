@@ -3,6 +3,7 @@ services:
   database:
     image: postgres:13.2
     container_name: astray-database
+    command: -p 5438
     ports:
       - 5438:5438
     volumes:
