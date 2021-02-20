@@ -21,7 +21,7 @@ services:
         NODE_ENV: development
     image: astray-app
     container_name: astray-app
-    command: npm run start
+    command: yarn start
     ports:
       - 29115:29115
     volumes:
