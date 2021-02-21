@@ -3,7 +3,7 @@ import { put, call, all, takeEvery } from 'redux-saga/effects';
 import storage from '../../../helpers/storage.helper';
 import * as authenticationService from '../services/authentication.service';
 
-import { getCurrentUserRoutine } from '../routines';
+import { getCurrentUserRoutine, logoutUserRoutine } from '../routines';
 
 function* getCurrentUserRequest() {
   try {
@@ -27,10 +27,24 @@ function* getCurrentUserRequest() {
   }
 }
 
+function* logoutUserRoutineRequest() {
+  try {
+    storage.removeItem('accessToken');
+
+    yield put(logoutUserRoutine.success());
+  } catch (error) {
+    yield put(logoutUserRoutine.failure(error.message));
+  }
+}
+
 function* watchGetCurrentUserRoutine() {
   yield takeEvery(getCurrentUserRoutine.TRIGGER, getCurrentUserRequest);
 }
 
+function* watchLogoutUserRoutine() {
+  yield takeEvery(logoutUserRoutine.TRIGGER, logoutUserRoutineRequest);
+}
+
 export default function* userSagas() {
-  yield all([watchGetCurrentUserRoutine()]);
+  yield all([watchGetCurrentUserRoutine(), watchLogoutUserRoutine()]);
 }

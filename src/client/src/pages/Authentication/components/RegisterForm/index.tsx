@@ -40,7 +40,7 @@ const RegisterForm: React.FC<IRegisterFormProps & FormikProps<any>> = ({
               value={values.name}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Ім\'я"
+              placeholder="Ім'я"
             />
           </FormField>
           <FormField htmlFor="email" error={emailError && errors.email}>
