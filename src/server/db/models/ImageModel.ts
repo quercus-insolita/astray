@@ -22,9 +22,11 @@ ImageModel.initModel<ImageModel>(
   {
     url: {
       type: DataTypes.STRING,
+      defaultValue: ''
     },
     hash: {
       type: DataTypes.STRING,
+      defaultValue: ''
     },
   },
   {
