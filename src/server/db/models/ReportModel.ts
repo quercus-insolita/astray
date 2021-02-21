@@ -1,7 +1,7 @@
 import { DataTypes, Sequelize } from 'sequelize'
 import { Report, ReportType, PetType, Color, Sex } from '../../common/domain'
 import { BaseModel, IBaseModel, IBaseModelConstructor } from './BaseModel'
-import { Models } from '..'
+import { ImageModel, Models } from '..'
 
 export interface IReportModel extends IBaseModel, Report {}
 
@@ -13,14 +13,16 @@ export class ReportModel extends BaseModel implements IReportModel {
   public type!: ReportType
   public petType!: PetType
   public color!: Color
-  public location!: string
+  public city!: string
   public sex!: Sex
-  public date!: Date
+  public date!: string
   public description!: string
 
+  public getImages!: () => ImageModel[]
+
   static associate(models: Models) {
-    ReportModel.hasMany(models.Contact, { foreignKey: 'reportId' })
-    ReportModel.hasMany(models.Image, { foreignKey: 'reportId' })
+    ReportModel.associations.Contact = ReportModel.hasMany(models.Contact, { foreignKey: 'reportId' })
+    ReportModel.associations.Image = ReportModel.hasMany(models.Image, { foreignKey: 'reportId' })
   }
 }
 
@@ -47,7 +49,6 @@ ReportModel.initModel<ReportModel>(
     },
     date: {
       type: DataTypes.STRING,
-      defaultValue: String(Sequelize.col('createdAt'))
     },
     description: {
       type: DataTypes.STRING,

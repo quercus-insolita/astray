@@ -2,6 +2,7 @@ import { DataTypes } from 'sequelize'
 import { Contact } from '../../common/domain'
 import { BaseModel, IBaseModel, IBaseModelConstructor } from './BaseModel'
 import { Models } from '..'
+import { ValidationErrorMessage } from '../../common/constants'
 
 export interface IContactModel extends IBaseModel, Contact {}
 
@@ -28,7 +29,7 @@ ContactModel.initModel<ContactModel>(
       defaultValue: '',
       validate: {
         isEmail: {
-          msg: 'isNotEmail',
+          msg: ValidationErrorMessage.NOT_EMAIL,
         },
       },
     },

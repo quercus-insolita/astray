@@ -44,10 +44,10 @@ export enum Color {
 export type Report = {
   type: ReportType
   petType: PetType
-  location: string
+  city: string
   sex: Sex
   color: Color
-  date: Date
+  date: string
   description: string
 }
 

@@ -16,7 +16,7 @@ export class UserModel extends BaseModel implements IUserModel {
   public password!: string
 
   static associate(models: Models) {
-    UserModel.hasMany(models.Report, { foreignKey: 'userId' })
+    UserModel.associations.Report = UserModel.hasMany(models.Report, { foreignKey: 'userId' })
   }
 }
 
