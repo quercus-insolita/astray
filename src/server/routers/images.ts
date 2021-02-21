@@ -1,4 +1,5 @@
 import express from 'express'
+import multer from 'multer'
 import { DEFAULT_ERROR_MESSAGE } from '../common/constants'
 import { Report, ReportType, Contact, Image } from '../common/domain'
 import { ContactModel, ReportModel } from '../db'
