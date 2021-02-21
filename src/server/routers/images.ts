@@ -16,7 +16,31 @@ router.use((req, _res, next) => {
 })
 
 router.get<{ id: string }, any, any>('/:id', async (req, res) => {
-  
+  const imageId = Number(req.params.id)
+  const imageEntity = await req.context.db.models.Image.findOne<ImageModel>({
+    where: {
+      id: imageId
+    }
+  })
+  if (!imageEntity) {
+    res.status(400).send({
+      success: false,
+      error: 'Запит на неіснуючу картинку'
+    })
+    return
+  }
+
+  const s3bucket = new AWS.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION
+  })
+
+  const gettingParams: AWS.S3.Types.GetObjectRequest = {
+    Bucket: process.env.AWS_BUCKET_NAME!,
+    Key: imageEntity.url,
+  }
+  s3bucket.getObject(gettingParams).createReadStream().pipe(res)
 })
 
 router.post<never, any, any>('/', upload.array('images'), async (req, res) => {
@@ -30,15 +54,23 @@ router.post<never, any, any>('/', upload.array('images'), async (req, res) => {
       region: process.env.AWS_REGION
     })
 
-    const params: AWS.S3.Types.PutObjectRequest = {
+    const uplodingParams: AWS.S3.Types.PutObjectRequest = {
       Bucket: process.env.AWS_BUCKET_NAME!,
       Key: `images/${imageEntity.id}`,
       Body: uploadedImage.buffer,
       ContentType: uploadedImage.mimetype,
       ACL: 'public-read'
     }
-    const { Location } = await s3bucket.upload(params).promise()
+    const { Key } = await s3bucket.upload(uplodingParams).promise()
+    await req.context.db.models.Image.update<ImageModel>({
+      url: Key
+    }, {
+      where: {
+        id: imageEntity.id
+      }
+    })
 
+    res.sendStatus(201)
   } catch (e) {
     console.error(e)
     req.context.logger.error(e)
