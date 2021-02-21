@@ -2,6 +2,7 @@ import { loginUserRoutine } from '../../../pages/Authentication/routines';
 import { getCurrentUserRoutine } from '../routines';
 
 const initialState = {
+  isAuthenticated: false,
   email: ''
 };
 
@@ -13,6 +14,7 @@ export const currentUser = (state = initialState, action) => {
 
       return {
         ...state,
+        isAuthenticated: true,
         ...user
       };
     }

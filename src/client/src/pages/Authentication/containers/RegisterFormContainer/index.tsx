@@ -31,14 +31,14 @@ const RegisterFormContainer: React.FC = (): React.ReactElement => {
   );
 
   return (
-    <Box align="center" justify="center" background={{ color: '#f8f8f8' }}>
+    <Box align="center" justify="center" height="90vh">
       <div>
         {/* {error && <ErrorMessage error={error} />} */}
         <Heading level="2" margin={{ bottom: '30px' }}>
-          Register
+          Зареєструватися
         </Heading>
         <RegisterForm handleSubmit={handleSubmit} loading={isSubmitting} />
-        <Link to="/login">I am already member</Link>
+        <Link to="/login">У мене вже є аккаунт</Link>
       </div>
     </Box>
   );

@@ -38,7 +38,7 @@ const LoginForm: React.FC<ILoginFormProps & FormikProps<IUserCredentials>> = ({
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Your email"
+              placeholder="Електронна пошта"
             />
           </FormField>
           <FormField htmlFor="password" error={passwordError && errors.password}>
@@ -50,7 +50,7 @@ const LoginForm: React.FC<ILoginFormProps & FormikProps<IUserCredentials>> = ({
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Password"
+              placeholder="Пароль"
             />
           </FormField>
         </Box>
@@ -58,7 +58,7 @@ const LoginForm: React.FC<ILoginFormProps & FormikProps<IUserCredentials>> = ({
           type="submit"
           primary={true}
           color="neutral-3"
-          label="Log in"
+          label="Увійти"
           disabled={loading}
           margin={{ bottom: '30px' }}
         />

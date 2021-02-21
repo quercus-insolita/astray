@@ -7,13 +7,20 @@ import { getCurrentUserRoutine } from '../routines';
 
 function* getCurrentUserRequest() {
   try {
-    const { user } = yield call(authenticationService.getCurrentUser);
+    const accessToken = storage.getItem('accessToken');
 
-    yield put(
-      getCurrentUserRoutine.success({
-        user
-      })
-    );
+    if (accessToken) {
+      const { user } = yield call(authenticationService.getCurrentUser);
+
+      yield put(
+        getCurrentUserRoutine.success({
+          user
+        })
+      );
+      return;
+    }
+
+    yield put(getCurrentUserRoutine.failure());
   } catch (error) {
     storage.removeItem('accessToken');
     yield put(getCurrentUserRoutine.failure(error.message));
