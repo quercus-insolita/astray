@@ -1,32 +1,39 @@
-import React from 'react';
-import { Anchor, Box, Header, Nav, Menu, ResponsiveContext } from 'grommet';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Heading, Image, Anchor, Box, Header, Nav } from 'grommet';
+
+import { logoutUserRoutine } from '../../shared/User/routines';
 
 const NavigationHeader: React.FC = (): React.ReactElement => {
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector(state => state.currentUser);
+
+  const handleLogout = useCallback(() => {
+    dispatch(logoutUserRoutine());
+  }, [dispatch]);
+
   return (
-    <Header background="dark-1" pad="medium">
+    <Header background="transparent" pad="medium">
       <Box direction="row" align="center" gap="small">
-        logo
+        <Image
+          fit="contain"
+          src="https://www.flaticon.com/svg/vstatic/svg/4044/4044218.svg?token=exp=1613882205~hmac=77d183c06d112a44e416925142b48616"
+          width="75px"
+          height="75px"
+        />
+        <Heading level="1">Astray</Heading>
       </Box>
-      <ResponsiveContext.Consumer>
-        {responsive =>
-          responsive === 'small' ? (
-            <Menu
-              label="Click me"
-              items={[
-                { label: 'Домашня сторінка', onClick: () => {} },
-                { label: 'Каталог тварин', onClick: () => {} },
-                { label: 'Розмістити оголошення', onClick: () => {} }
-              ]}
-            />
-          ) : (
-            <Nav direction="row">
-              <Anchor href="/" label="Домашня сторінка" />
-              <Anchor href="/search" label="Каталог тварин" />
-              <Anchor href="/report" label="Розмістити оголошення" />
-            </Nav>
-          )
-        }
-      </ResponsiveContext.Consumer>
+
+      <Nav direction="row">
+        <Anchor href="/" label="Домашня сторінка" />
+        <Anchor href="/search" label="Каталог" />
+        <Anchor href="/report" label="Оголошення" />
+        {!isAuthenticated ? (
+          <Anchor href="/login" label="Увійти" />
+        ) : (
+          <Anchor label="Вийти" onClick={handleLogout} />
+        )}
+      </Nav>
     </Header>
   );
 };

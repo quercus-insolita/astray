@@ -31,14 +31,14 @@ const LoginFormContainer: React.FC = (): React.ReactElement => {
   );
 
   return (
-    <Box align="center" justify="center" background={{ color: '#f8f8f8' }}>
+    <Box align="center" justify="center" height="90vh">
       <div>
         {/* {error && <ErrorMessage error={error} />} */}
         <Heading level="2" margin={{ bottom: '30px' }}>
-          Sign in
+          Увійти
         </Heading>
         <LoginForm handleSubmit={handleSubmit} loading={isSubmitting} />
-        <Link to="/register">Create an account</Link>
+        <Link to="/register">Створити аккаунт</Link>
       </div>
     </Box>
   );

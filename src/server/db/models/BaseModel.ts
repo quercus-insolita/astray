@@ -4,9 +4,11 @@ import {
   ModelAttributeColumnOptions,
   InitOptions,
   ModelAttributes,
+  Sequelize,
 } from 'sequelize'
 
-import { ProjectModelsStore } from '../store'
+import { sequelize } from '../sequelize'
+import { Models } from '..'
 import { PREFER_RESTRICT_NULL } from '../config'
 
 export interface IBaseModel {
@@ -16,7 +18,7 @@ export interface IBaseModel {
 }
 
 export interface IBaseModelConstructor extends ModelCtor<BaseModel> {
-  associate(models: ProjectModelsStore): void
+  associate?(models: Models): void
   associations: Record<string, any>
   initModel(attributes: ModelAttributes, options: Partial<InitOptions>): void
 }
@@ -28,7 +30,7 @@ export abstract class BaseModel extends Model implements IBaseModel {
 
   static initModel<M extends BaseModel = BaseModel>(
     attributes: ModelAttributes,
-    options: InitOptions<M>,
+    options: Partial<InitOptions<M>>,
   ) {
     if (PREFER_RESTRICT_NULL) {
       attributes = Object.entries(attributes).reduce<ModelAttributes>(
@@ -45,6 +47,11 @@ export abstract class BaseModel extends Model implements IBaseModel {
         {},
       )
     }
-    super.init.call(this as any, attributes, options as any)
+    console.log('%j', sequelize)
+    super.init.call(this as any, attributes, {
+      underscored: true,
+      sequelize,
+      ...options,
+    } as any)
   }
 }

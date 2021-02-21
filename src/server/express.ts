@@ -2,10 +2,9 @@ import express from 'express'
 import cors from 'cors'
 import { parse } from 'qs'
 import * as path from 'path'
-
 import { router as apiRouter } from './routers/api'
 import { createAppContext } from './context'
-import { createLogger, Logger } from './common/logger'
+import { createLogger } from './common/logger'
 
 const staticDirPath = path.join(__dirname, 'static')
 
@@ -28,8 +27,11 @@ export const createExpressApp = () => {
   app.use(express.static(staticDirPath))
 
   app.use((req, _res, next) => {
-    Object.assign(req, createAppContext())
-    next()
+    createAppContext(req)
+      .then(appContext => {
+        req.context = appContext
+      })
+      .then(next)
   })
 
   const externalEndpointsRegex = /^\/(?!_)/ // all routes that start from _ are reserved for internal usage
