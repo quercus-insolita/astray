@@ -161,7 +161,7 @@ router.post<never, any, PostReportRequestBody>('/', verifyTokenAndInjectUser, as
     })
   }
 })
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEzODc5MTQ3LCJleHAiOjE2MTM5NjU1NDd9.XDLKzejlbXN5NvqrwN8_oRX3Qzb2X3-ERxpoY0anQYI
+
 router.delete<{ id: string }, any, never>('/:id', verifyTokenAndInjectUser, async (req, res) => {
   // try {
   //   const { id } = req.params
