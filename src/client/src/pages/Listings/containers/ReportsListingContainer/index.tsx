@@ -7,7 +7,7 @@ import { ReportsListingProvider } from '../../contexts/ReportsListingContext';
 import ReportsListingViewContainer from './containers/ReportListingsViewContainer';
 
 import { RootState } from '../../../../reducers';
-import { ReportType } from '../../models/reports';
+import { ReportType } from '../../../../models/report';
 
 import { checkIfLoading } from '../../../../store/selectors';
 import { getReportsRoutine } from '../../routines';
@@ -24,6 +24,7 @@ const ReportsListingContainer: React.FC<IReportsListingContainerProps> = ({
     (state: RootState) => checkIfLoading(state, getReportsRoutine.TRIGGER),
     shallowEqual
   );
+  const reports = useSelector((state: RootState) => state.reports);
 
   const fetchReports = useCallback(() => {
     dispatch(getReportsRoutine({ type }));
@@ -35,8 +36,8 @@ const ReportsListingContainer: React.FC<IReportsListingContainerProps> = ({
 
   return (
     <LoaderWrapper loading={loading}>
-      <Container className="mt-2 mb-4">
-        <ReportsListingProvider data={[]}>
+      <Container className="mt-3 mb-4">
+        <ReportsListingProvider data={reports}>
           <ReportsListingViewContainer />
         </ReportsListingProvider>
       </Container>

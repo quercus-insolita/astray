@@ -2,7 +2,7 @@ import { callWebApi } from '../../../helpers/webApi.helper';
 
 export const loginUser = async data => {
   return await callWebApi({
-    endpoint: 'authentication',
+    endpoint: '_api/login',
     requestData: data,
     type: 'POST'
   });
@@ -10,7 +10,7 @@ export const loginUser = async data => {
 
 export const registerUser = async data => {
   return await callWebApi({
-    endpoint: 'registration',
+    endpoint: '_api/register',
     requestData: data,
     type: 'POST'
   });

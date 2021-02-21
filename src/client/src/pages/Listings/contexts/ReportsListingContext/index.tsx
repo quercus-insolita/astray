@@ -8,6 +8,8 @@ import { IListingFilters } from '../../models/filters';
 import { IReport } from '../../../../models/report';
 
 interface ReportsListingContextData {
+  data: any;
+  filteredData: any;
   viewType: ViewType;
   updateFilter: IBindingCallback1<IListingFilters>;
   updateViewType: IBindingCallback1<ViewType>;
@@ -20,7 +22,7 @@ export const ReportsListingContext = createContext<ReportsListingContextData>(
 export const ReportsListingProvider: React.FC<{
   data: IReport[];
   children: React.ReactNode;
-}> = ({ children }) => {
+}> = ({ data, children }) => {
   const [viewType, setViewType] = useState<ViewType>(ViewType.GridView);
   const [filters, applyFilters] = useState<IListingFilters>({} as IListingFilters);
 
@@ -33,11 +35,12 @@ export const ReportsListingProvider: React.FC<{
     }),
     []
   );
-
-  // const filteredData = filterReportsListing(data, filters);
+  const filteredData = filterReportsListing(data, filters);
 
   return (
-    <ReportsListingContext.Provider value={{ viewType, ...reportsListingContext }}>
+    <ReportsListingContext.Provider
+      value={{ data, filteredData, viewType, ...reportsListingContext }}
+    >
       {children}
     </ReportsListingContext.Provider>
   );

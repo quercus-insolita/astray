@@ -1,7 +1,8 @@
 import { loginUserRoutine } from '../../../pages/Authentication/routines';
-import { getCurrentUserRoutine } from '../routines';
+import { getCurrentUserRoutine, logoutUserRoutine } from '../routines';
 
 const initialState = {
+  isAuthenticated: false,
   email: ''
 };
 
@@ -13,7 +14,14 @@ export const currentUser = (state = initialState, action) => {
 
       return {
         ...state,
+        isAuthenticated: true,
         ...user
+      };
+    }
+    case logoutUserRoutine.SUCCESS: {
+      return {
+        ...state,
+        isAuthenticated: false
       };
     }
     default:

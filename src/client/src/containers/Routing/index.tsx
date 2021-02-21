@@ -45,25 +45,23 @@ const Routing: React.FC = (): React.ReactElement => {
   const renderRegistration = regProps => <RegisterPage {...regProps} />;
 
   return (
-    <Switch>
-      <LoaderWrapper loading={loading}>
-        <NavigationHeader />
-        <div>
-          <Switch>
-            <Route exact={true} path="/" render={() => <LandingPage />} />
-            <Route exact={true} path="/login" component={renderLogin} />
-            <Route exact={true} path="/register" component={renderRegistration} />
-            <Route exact={true} path="/report" render={() => <ReportPage />} />
-            <Route exact={true} path="/report/found" render={() => <AddFoundReportPage />} />
-            <Route exact={true} path="/report/lost" render={() => <AddLostReportPage />} />
-            <Route exact={true} path="/search" render={() => <ReportsListingPage />} />
-            <Route exact={true} path="/search/found" render={() => <FoundReportsListingPage />} />
-            <Route exact={true} path="/search/lost" render={() => <LostReportsListingPage />} />
-            <Route exact={true} path="/:id" render={() => <PetDetailsPage />} />
-          </Switch>
-        </div>
-      </LoaderWrapper>
-    </Switch>
+    <LoaderWrapper loading={loading}>
+      <NavigationHeader />
+      <div>
+        <Switch>
+          <Route exact={true} path="/" render={() => <LandingPage />} />
+          <Route exact={true} path="/login" component={renderLogin} />
+          <Route exact={true} path="/register" component={renderRegistration} />
+          <Route exact={true} path="/report" component={ReportPage} />
+          <Route exact={true} path="/report/found" component={AddFoundReportPage} />
+          <Route exact={true} path="/report/lost" component={AddLostReportPage} />
+          <Route exact={true} path="/search" render={() => <ReportsListingPage />} />
+          <Route exact={true} path="/search/found" render={() => <FoundReportsListingPage />} />
+          <Route exact={true} path="/search/lost" render={() => <LostReportsListingPage />} />
+          <Route exact={true} path="/:id" render={() => <PetDetailsPage />} />
+        </Switch>
+      </div>
+    </LoaderWrapper>
   );
 };
 

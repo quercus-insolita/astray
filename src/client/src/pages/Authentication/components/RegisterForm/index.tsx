@@ -40,7 +40,7 @@ const RegisterForm: React.FC<IRegisterFormProps & FormikProps<any>> = ({
               value={values.name}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Your name"
+              placeholder="Ім'я"
             />
           </FormField>
           <FormField htmlFor="email" error={emailError && errors.email}>
@@ -52,7 +52,7 @@ const RegisterForm: React.FC<IRegisterFormProps & FormikProps<any>> = ({
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Your email"
+              placeholder="Електронна пошта"
             />
           </FormField>
           <FormField htmlFor="password" error={passwordError && errors.password}>
@@ -64,7 +64,7 @@ const RegisterForm: React.FC<IRegisterFormProps & FormikProps<any>> = ({
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Password"
+              placeholder="Пароль"
             />
           </FormField>
           <FormField
@@ -79,7 +79,7 @@ const RegisterForm: React.FC<IRegisterFormProps & FormikProps<any>> = ({
               value={values.confirmPassword}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Repeat your password"
+              placeholder="Повторіть пароль"
             />
           </FormField>
         </Box>
@@ -87,7 +87,7 @@ const RegisterForm: React.FC<IRegisterFormProps & FormikProps<any>> = ({
           type="submit"
           primary={true}
           color="neutral-3"
-          label="Register"
+          label="Зареєструватися"
           disabled={!!disabled}
           margin={{ bottom: '30px' }}
         />
