@@ -26,6 +26,24 @@ export class AuthService extends Loggable {
       expiresIn: 24 * 60 * 60,
     })
   }
+  
+  async verifyToken<DecodedData extends object | string = object | string>(token: string): Promise<{
+    success: true,
+    decodedData: DecodedData
+  } | {
+    success: false
+  }> {
+    try {
+      return {
+        success: true,
+        decodedData: jwt.verify(token, JWT_SECRET) as DecodedData
+      }
+    } catch {
+      return {
+        success: false,
+      }
+    }
+  }
 
   async registerUser(user: User): Promise<RegisterUserReturnType> {
     const { password: rawPassword } = user

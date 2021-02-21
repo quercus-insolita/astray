@@ -27,9 +27,9 @@ export const createExpressApp = () => {
   app.use(express.static(staticDirPath))
 
   app.use((req, _res, next) => {
-    createAppContext()
+    createAppContext(req)
       .then(appContext => {
-        Object.assign(req, appContext)
+        req.context = appContext
       })
       .then(next)
   })
