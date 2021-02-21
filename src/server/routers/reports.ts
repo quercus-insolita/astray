@@ -106,6 +106,7 @@ type PostReportRequestBody = Partial<Report> & {
 }
 router.post<never, any, PostReportRequestBody>('/', verifyTokenAndInjectUser, async (req, res) => {
   try {
+    req.context.logger.info('beginning')
     const { contact, ...reportWithoutContact } = req.body
     const { id: reportId } = await req.context.db.models.Report.create<ReportModel>({
       ...reportWithoutContact,
@@ -116,8 +117,12 @@ router.post<never, any, PostReportRequestBody>('/', verifyTokenAndInjectUser, as
           association: ReportModel.associations.User
         }
       ]
+    }).catch(e => {
+      console.log(e)
+      return { id: 1 }
     })
     
+    req.context.logger.info('before contact create')
     await req.context.db.models.Contact.create<ContactModel>({
       ...contact,
       reportId
@@ -128,6 +133,7 @@ router.post<never, any, PostReportRequestBody>('/', verifyTokenAndInjectUser, as
         }
       ]
     })
+    req.context.logger.info('after contact create')
     
     res.status(201).json({
       success: true,
@@ -143,7 +149,7 @@ router.post<never, any, PostReportRequestBody>('/', verifyTokenAndInjectUser, as
     })
   }
 })
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEzODc3MTQ4LCJleHAiOjE2MTM5NjM1NDh9.s4gDyHlKd7dKDPAoIkRne3-quqpZCJBpSDoDFrbS3Cs
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEzODc4NTA4LCJleHAiOjE2MTM5NjQ5MDh9.KbMGLdu__xqvHu587LESgxuDgXS-pzin6pWAw5-gqFw
 router.delete<{ id: string }, any, never>('/:id', verifyTokenAndInjectUser, async (req, res) => {
   // try {
   //   const { id } = req.params

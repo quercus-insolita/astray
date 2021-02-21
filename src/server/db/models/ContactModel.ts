@@ -17,6 +17,10 @@ export class ContactModel extends BaseModel implements IContactModel {
   public telegram!: string
   public facebook!: string
   public viber!: string
+
+  static associate(models: Models) {
+    ContactModel.associations.Report = ContactModel.belongsTo(models.Report, { foreignKey: 'reportId' })
+  }
 }
 
 ContactModel.initModel<ContactModel>(

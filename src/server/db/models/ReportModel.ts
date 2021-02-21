@@ -23,12 +23,13 @@ export class ReportModel extends BaseModel implements IReportModel {
   static associate(models: Models) {
     ReportModel.associations.Contact = ReportModel.hasMany(models.Contact, { foreignKey: 'reportId' })
     ReportModel.associations.Image = ReportModel.hasMany(models.Image, { foreignKey: 'reportId' })
+    ReportModel.associations.User = ReportModel.belongsTo(models.User, { foreignKey: 'userId' })
   }
 }
 
 ReportModel.initModel<ReportModel>(
   {
-    reportType: {
+    type: {
       type: DataTypes.ENUM(...Object.values(ReportType)),
     },
     petType: {

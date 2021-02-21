@@ -12,6 +12,10 @@ export interface IImageModelConstructor extends IBaseModelConstructor {
 export class ImageModel extends BaseModel implements IImageModel {
   public url!: string
   public hash!: string
+
+  static associate(models: Models) {
+    ImageModel.associations.Report = ImageModel.belongsTo(models.Report, { foreignKey: 'reportId' })
+  }
 }
 
 ImageModel.initModel<ImageModel>(
