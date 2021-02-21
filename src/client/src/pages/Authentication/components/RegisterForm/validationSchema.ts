@@ -1,14 +1,14 @@
 import * as Yup from 'yup';
 
 export const validationSchema = Yup.object().shape({
-  email: Yup.string().label('Email').email('Enter a valid email').required('Email is required'),
-  name: Yup.string().required('Name is required'),
+  email: Yup.string().label('Email').email('Введіть валідну електронну пошту').required('Введіть електронну пошту'),
+  name: Yup.string().required('Введіть ім\'я'),
   password: Yup.string()
     .label('Password')
-    .required('Password is required')
-    .min(5, 'Password must have at least 5 characters ')
-    .max(20, 'Password must be less than 20 characters '),
+    .required('Введіть пароль')
+    .min(5, 'Пароль повинен бути не менше 5 символів')
+    .max(20, 'Пароль повинен бути не більше 20 символів '),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required')
+    .required('Введіть повторний пароль')
 });

@@ -1,5 +1,6 @@
 import * as queryString from 'query-string';
 
+import storage from '../helpers/storage.helper';
 import { IFetchArgs, IFetchArgsData } from '../models/fetch';
 
 const getFetchUrl = ({ endpoint, queryParams }: IFetchArgsData) => {
@@ -9,10 +10,14 @@ const getFetchUrl = ({ endpoint, queryParams }: IFetchArgsData) => {
 const getInitHeaders = (contentType = 'application/json', hasContent = true) => {
   const headers: HeadersInit = new Headers();
 
-  if (hasContent) {
-    headers.set('Content-Type', contentType);
-    headers.set('Accept', contentType);
+  const token = storage.getItem('accessToken');
+
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`);
   }
+
+  headers.set('Content-Type', contentType);
+  headers.set('Accept', contentType);
 
   return headers;
 };
@@ -46,8 +51,8 @@ const throwIfResponseFailed = async (res: Response) => {
 };
 
 export const callWebApi = async (args: IFetchArgsData): Promise<Response> => {
-  const res = await fetch(getFetchUrl(args), { mode: 'no-cors', ...getFetchArgs(args) });
+  const res = await fetch(getFetchUrl(args), getFetchArgs(args));
   await throwIfResponseFailed(res);
 
-  return res;
+  return await res.json();
 };

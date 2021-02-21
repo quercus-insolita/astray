@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from 'grommet';
 
 import usePagination from '../../../../../../hooks/usePagination';
 import Paginator from '../../../../../../components/Paginator';
@@ -10,7 +11,13 @@ import ViewTypeButtons from '../../components/ViewTypeButtons';
 import { IListingFilters } from '../../../../models/filters';
 
 const ReportsListingViewContainer: React.FC = (): React.ReactElement => {
-  const { viewType, updateFilter, updateViewType } = useReportsListing();
+  const {
+    data = [],
+    filteredData = [],
+    viewType,
+    updateFilter,
+    updateViewType
+  } = useReportsListing();
   const {
     totalPages,
     currentPage,
@@ -18,7 +25,7 @@ const ReportsListingViewContainer: React.FC = (): React.ReactElement => {
     resetPagination,
     nextEnabled,
     pageSize
-  } = usePagination(0);
+  } = usePagination(filteredData.length);
 
   const handleUpdateFilter = (filter: IListingFilters): void => {
     resetPagination();
@@ -26,13 +33,12 @@ const ReportsListingViewContainer: React.FC = (): React.ReactElement => {
   };
 
   const offset = (currentPage - 1) * pageSize;
-  //const currentListings = filteredData.slice(offset, offset + pageSize);
-  const currentListings = [];
+  const currentListings = filteredData.slice(offset, offset + pageSize);
 
   return (
-    <div>
-      <ListingFilters updateFilter={handleUpdateFilter} totalItems={0} />
-      <div>
+    <Box direction="row">
+      <ListingFilters updateFilter={handleUpdateFilter} totalItems={data.length} />
+      <div style={{ flex: 1 }}>
         <ViewTypeButtons viewType={viewType} updateViewType={updateViewType} />
         <ReportsListing listings={currentListings} viewType={viewType} />
         {nextEnabled && (
@@ -45,7 +51,7 @@ const ReportsListingViewContainer: React.FC = (): React.ReactElement => {
           </div>
         )}
       </div>
-    </div>
+    </Box>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { Box, Text } from 'grommet';
 import map from 'lodash/map';
 
 import ReportCardGrid from '../../../../components/ReportCardGrid';
@@ -19,9 +20,9 @@ const ReportsListing: React.FC<IReportsListingProps> = ({
   viewType
 }): React.ReactElement => {
   const renderEmptyComponent = () => (
-    <div>
-      <p>Не знайдено.</p>
-    </div>
+    <Box margin="xlarge">
+      <Text textAlign="center">Результати не знайдено.</Text>
+    </Box>
   );
 
   const renderListings = useCallback(
