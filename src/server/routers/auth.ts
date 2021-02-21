@@ -31,6 +31,7 @@ router.post<never, any, User>('/register', async (req, res) => {
       })
     }
   } catch (e) {
+    console.error(e)
     req.context.logger.error(e)
     res.status(500).json({
       success: false,
@@ -61,6 +62,7 @@ router.post<never, any, Pick<User, 'email' | 'password'>>('/login', async (req, 
       })
     }
   } catch (e) {
+    console.error(e)
     req.context.logger.error(e)
     res.status(500).json({
       success: false,

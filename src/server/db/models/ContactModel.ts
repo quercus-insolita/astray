@@ -31,11 +31,6 @@ ContactModel.initModel<ContactModel>(
     email: {
       type: DataTypes.STRING,
       defaultValue: '',
-      validate: {
-        isEmail: {
-          msg: ValidationErrorMessage.NOT_EMAIL,
-        },
-      },
     },
     phone: {
       type: DataTypes.STRING,

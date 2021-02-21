@@ -17,17 +17,23 @@ type GetAllReportsQueryParams = {
 router.get<never, any, never, GetAllReportsQueryParams>('/', async (req, res) => {
   const { type } = req.query
   try {
-    const allReportsOfGivenTypeModels = await req.context.db.models.Report.findAll<ReportModel>({
-      where: {
-        type
-      }
-    })
+    const allReportsOfGivenTypeModels = type
+      ? await req.context.db.models.Report.findAll<ReportModel>({
+          where: {
+            type
+          }
+        })
+      : await req.context.db.models.Report.findAll<ReportModel>()
 
     const response: any[] = []
     for (const report of allReportsOfGivenTypeModels) {
-      const [image] = await report.getImages()
+      const image = await req.context.db.models.Image.findOne<ImageModel>({
+        where: {
+          reportId: report.id
+        }
+      })
       const { type, petType, city, sex, color, date, description } = report
-      response.push({ type, petType, city, sex, color, date, description, imageId: image!.id })
+      response.push({ type, petType, city, sex, color, date, description, imageId: image?.id })
     }
 
     res.status(200).json({
@@ -35,6 +41,7 @@ router.get<never, any, never, GetAllReportsQueryParams>('/', async (req, res) =>
       reports: response,
     })
   } catch (e) {
+    console.error(e)
     req.context.logger.error(e)
     res.status(500).json({
       success: false,
@@ -93,6 +100,7 @@ router.get<{ id: string }, any, never>('/:id', async (req, res) => {
       report: response
     })
   } catch (e) {
+    console.error(e)
     req.context.logger.error(e)
     res.status(500).json({
       success: false,
@@ -115,11 +123,14 @@ router.post<never, any, PostReportRequestBody>('/', verifyTokenAndInjectUser, as
       include: [
         {
           association: ReportModel.associations.User
-        }
+        },
+        {
+          association: ReportModel.associations.Contact
+        },
+        {
+          association: ReportModel.associations.Image
+        },
       ]
-    }).catch(e => {
-      console.log(e)
-      return { id: 1 }
     })
     
     req.context.logger.info('before contact create')
@@ -142,6 +153,7 @@ router.post<never, any, PostReportRequestBody>('/', verifyTokenAndInjectUser, as
       }
     })
   } catch (e) {
+    console.error(e)
     req.context.logger.error(e)
     res.status(500).json({
       success: false,
@@ -149,7 +161,7 @@ router.post<never, any, PostReportRequestBody>('/', verifyTokenAndInjectUser, as
     })
   }
 })
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEzODc4NTA4LCJleHAiOjE2MTM5NjQ5MDh9.KbMGLdu__xqvHu587LESgxuDgXS-pzin6pWAw5-gqFw
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEzODc5MTQ3LCJleHAiOjE2MTM5NjU1NDd9.XDLKzejlbXN5NvqrwN8_oRX3Qzb2X3-ERxpoY0anQYI
 router.delete<{ id: string }, any, never>('/:id', verifyTokenAndInjectUser, async (req, res) => {
   // try {
   //   const { id } = req.params
