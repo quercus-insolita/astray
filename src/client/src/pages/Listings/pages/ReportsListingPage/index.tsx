@@ -1,6 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Box, Paragraph, Heading, Card, CardBody, Image } from 'grommet';
+import { Box, Paragraph, Heading, Card, CardBody } from 'grommet';
+
+import {
+  SearchPageLostSectionLogo,
+  SearchPageFoundSectionLogo
+} from '../../../../components/images';
 
 import './styles.css';
 
@@ -25,11 +30,7 @@ const ReportsListingPage: React.FC = (): React.ReactElement => {
           className="reports-card"
         >
           <CardBody height="medium" pad={{ vertical: 'large' }}>
-            <Image
-              fit="contain"
-              src="https://www.flaticon.com/svg/vstatic/svg/4044/4044211.svg?token=exp=1613871085~hmac=6e35eb9cb0a2e6ce2a8cde2a4effad7c"
-              a11yTitle="pet-card-image"
-            />
+            <SearchPageLostSectionLogo />
           </CardBody>
           <Box pad={{ horizontal: 'medium', bottom: 'medium' }} responsive={false}>
             <Heading level="3" margin={{ vertical: 'medium' }}>
@@ -49,11 +50,7 @@ const ReportsListingPage: React.FC = (): React.ReactElement => {
           className="reports-card"
         >
           <CardBody height="medium" pad={{ vertical: 'large' }}>
-            <Image
-              fit="contain"
-              src="https://www.flaticon.com/svg/vstatic/svg/4044/4044232.svg?token=exp=1613871085~hmac=96b352176b3fb2b676066fc38993eb47"
-              a11yTitle="pet-card-image"
-            />
+            <SearchPageFoundSectionLogo />
           </CardBody>
           <Box pad={{ horizontal: 'medium', bottom: 'medium' }} responsive={false}>
             <Heading level="3" margin={{ vertical: 'medium' }}>

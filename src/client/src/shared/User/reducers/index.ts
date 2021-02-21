@@ -1,4 +1,4 @@
-import { loginUserRoutine } from '../../../pages/Authentication/routines';
+import { loginUserRoutine, registerUserRoutine } from '../../../pages/Authentication/routines';
 import { getCurrentUserRoutine, logoutUserRoutine } from '../routines';
 
 const initialState = {
@@ -8,6 +8,7 @@ const initialState = {
 
 export const currentUser = (state = initialState, action) => {
   switch (action.type) {
+    case registerUserRoutine.SUCCESS:
     case loginUserRoutine.SUCCESS:
     case getCurrentUserRoutine.SUCCESS: {
       const { user } = action.payload;

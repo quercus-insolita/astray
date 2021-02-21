@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Heading, Image, Anchor, Box, Header, Nav } from 'grommet';
+import { Heading, Anchor, Box, Header, Nav } from 'grommet';
+
+import { AppLogo } from '../images';
 
 import { logoutUserRoutine } from '../../shared/User/routines';
 
@@ -15,12 +17,7 @@ const NavigationHeader: React.FC = (): React.ReactElement => {
   return (
     <Header background="transparent" pad="medium">
       <Box direction="row" align="center" gap="small">
-        <Image
-          fit="contain"
-          src="https://www.flaticon.com/svg/vstatic/svg/4044/4044218.svg?token=exp=1613882205~hmac=77d183c06d112a44e416925142b48616"
-          width="75px"
-          height="75px"
-        />
+        <AppLogo />
         <Heading level="1">Astray</Heading>
       </Box>
 

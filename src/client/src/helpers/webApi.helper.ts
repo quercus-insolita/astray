@@ -3,8 +3,10 @@ import * as queryString from 'query-string';
 import storage from '../helpers/storage.helper';
 import { IFetchArgs, IFetchArgsData } from '../models/fetch';
 
+const { origin } = window.location;
+
 const getFetchUrl = ({ endpoint, queryParams }: IFetchArgsData) => {
-  return `${endpoint}${queryParams ? `?${queryString.stringify(queryParams)}` : ''}`;
+  return `${origin}/${endpoint}${queryParams ? `?${queryString.stringify(queryParams)}` : ''}`;
 };
 
 const getInitHeaders = (contentType = 'application/json', hasContent = true) => {
