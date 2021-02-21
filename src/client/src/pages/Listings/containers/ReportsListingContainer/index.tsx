@@ -7,7 +7,7 @@ import { ReportsListingProvider } from '../../contexts/ReportsListingContext';
 import ReportsListingViewContainer from './containers/ReportListingsViewContainer';
 
 import { RootState } from '../../../../reducers';
-import { ReportType } from '../../models/reports';
+import { ReportType } from '../../../../models/report';
 
 import { checkIfLoading } from '../../../../store/selectors';
 import { getReportsRoutine } from '../../routines';
