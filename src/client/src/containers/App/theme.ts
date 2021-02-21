@@ -4,7 +4,12 @@ import { deepMerge } from 'grommet/utils';
 const theme = deepMerge(grommet, {
   formField: {
     label: {
-      requiredIndicator: true
+      size: 'small',
+      color: 'text-weak',
+      requiredIndicator: true,
+      margin: {
+        start: 'none'
+      }
     }
   }
 });

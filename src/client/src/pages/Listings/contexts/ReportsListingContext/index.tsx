@@ -33,7 +33,7 @@ export const ReportsListingProvider: React.FC<{
     }),
     []
   );
-
+  console.log('filters', filters);
   // const filteredData = filterReportsListing(data, filters);
 
   return (

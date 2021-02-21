@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Box, Paragraph, Heading, Card, CardBody } from 'grommet';
+import { Image, Box, Paragraph, Heading, Card, CardBody } from 'grommet';
 
 const ReportPage: React.FC = (): React.ReactElement => {
   const history = useHistory();
@@ -22,8 +22,12 @@ const ReportPage: React.FC = (): React.ReactElement => {
           onClick={() => handleRouteChange('/report/lost')}
           className="reports-card"
         >
-          <CardBody height="small">
-            {/* <Image fit="cover" src={dogImage} a11yTitle="bridge" /> */}
+          <CardBody height="medium" pad={{ vertical: 'large' }}>
+            <Image
+              fit="contain"
+              src="https://www.flaticon.com/svg/vstatic/svg/4044/4044400.svg?token=exp=1613871085~hmac=b74485503793fee093be04da496ac6dd"
+              a11yTitle="pet-card-image"
+            />
           </CardBody>
           <Box pad={{ horizontal: 'medium', bottom: 'medium' }} responsive={false}>
             <Heading level="3" margin={{ vertical: 'medium' }}>
@@ -40,8 +44,12 @@ const ReportPage: React.FC = (): React.ReactElement => {
           onClick={() => handleRouteChange('/report/found')}
           className="reports-card"
         >
-          <CardBody height="small">
-            {/* <Image fit="cover" src={dogImage} a11yTitle="bridge" /> */}
+          <CardBody height="medium" pad={{ vertical: 'large' }}>
+            <Image
+              fit="contain"
+              src="https://www.flaticon.com/svg/vstatic/svg/4044/4044304.svg?token=exp=1613871085~hmac=45d59998d00633bbb4da25911a6226eb"
+              a11yTitle="pet-card-image"
+            />
           </CardBody>
           <Box pad={{ horizontal: 'medium', bottom: 'medium' }} responsive={false}>
             <Heading level="3" margin={{ vertical: 'medium' }}>

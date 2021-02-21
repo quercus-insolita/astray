@@ -35,7 +35,7 @@ const ReportsListingContainer: React.FC<IReportsListingContainerProps> = ({
 
   return (
     <LoaderWrapper loading={loading}>
-      <Container className="mt-2 mb-4">
+      <Container className="mt-3 mb-4">
         <ReportsListingProvider data={[]}>
           <ReportsListingViewContainer />
         </ReportsListingProvider>

@@ -1,1 +1,5 @@
-export interface IListingFilters {}
+export interface IListingFilters {
+  sortOrder: any;
+  type: any;
+  sex: any;
+}

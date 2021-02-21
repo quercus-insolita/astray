@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from 'grommet';
 
 import usePagination from '../../../../../../hooks/usePagination';
 import Paginator from '../../../../../../components/Paginator';
@@ -30,9 +31,9 @@ const ReportsListingViewContainer: React.FC = (): React.ReactElement => {
   const currentListings = [];
 
   return (
-    <div>
+    <Box direction="row">
       <ListingFilters updateFilter={handleUpdateFilter} totalItems={0} />
-      <div>
+      <div style={{ flex: 1 }}>
         <ViewTypeButtons viewType={viewType} updateViewType={updateViewType} />
         <ReportsListing listings={currentListings} viewType={viewType} />
         {nextEnabled && (
@@ -45,7 +46,7 @@ const ReportsListingViewContainer: React.FC = (): React.ReactElement => {
           </div>
         )}
       </div>
-    </div>
+    </Box>
   );
 };
 
