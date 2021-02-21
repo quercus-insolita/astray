@@ -7,9 +7,11 @@ import { loginUserRoutine } from '../../routines';
 
 function* loginUserRoutineRequest({ payload }: ReturnType<typeof loginUserRoutine.trigger>) {
   try {
-    const { user, accessToken } = yield call(authenticationService.loginUser, payload);
+    const {
+      data: { user, token }
+    } = yield call(authenticationService.loginUser, payload);
 
-    storage.setItem('accessToken', accessToken);
+    storage.setItem('accessToken', token);
 
     yield put(
       loginUserRoutine.success({

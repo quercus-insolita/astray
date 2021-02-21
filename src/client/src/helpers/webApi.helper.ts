@@ -54,5 +54,5 @@ export const callWebApi = async (args: IFetchArgsData): Promise<Response> => {
   const res = await fetch(getFetchUrl(args), getFetchArgs(args));
   await throwIfResponseFailed(res);
 
-  return res;
+  return await res.json();
 };

@@ -7,9 +7,11 @@ import { registerUserRoutine } from '../../routines';
 
 function* registerUserRoutineRequest({ payload }: ReturnType<typeof registerUserRoutine.trigger>) {
   try {
-    const { user, accessToken } = yield call(authenticationService.registerUser, payload);
+    const {
+      data: { user, token }
+    } = yield call(authenticationService.registerUser, payload);
 
-    storage.setItem('accessToken', accessToken);
+    storage.setItem('accessToken', token);
 
     yield put(
       registerUserRoutine.success({

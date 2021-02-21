@@ -15,22 +15,7 @@ import {
   TextInput
 } from 'grommet';
 
-enum PetTypes {
-  Dog = 'Собака',
-  Cat = 'Кішка',
-  Other = 'Інший'
-}
-
-enum PetSex {
-  Male = 'Хлопець',
-  Female = 'Дівчина',
-  NotSure = 'Не впевнений'
-}
-
-enum PetColor {
-  Black = 'Чорний',
-  Brown = 'Коричневий'
-}
+import { PetTypeMapping, PetSexMapping, PetColorMapping } from '../../../../shared/constants';
 
 const ReportForm = ({
   values,
@@ -53,24 +38,28 @@ const ReportForm = ({
     <Form onSubmit={handleSubmit}>
       <FormField
         label="Тип тварини"
-        htmlFor="type"
-        name="type"
+        htmlFor="petType"
+        name="petType"
         required={true}
         margin={{ bottom: 'medium' }}
       >
         <Select
-          id="type"
-          name="type"
-          options={[PetTypes.Dog, PetTypes.Cat, PetTypes.Other]}
-          value={values.type}
-          onChange={({ option }) => setFieldValue('type', option)}
+          id="petType"
+          name="petType"
+          options={[PetTypeMapping.Dog.label, PetTypeMapping.Cat.label, PetTypeMapping.Other.label]}
+          value={values.petType}
+          onChange={({ option }) => setFieldValue('petType', option)}
         />
       </FormField>
 
       <FormField label="Стать" name="sex" required={true} margin={{ bottom: 'medium' }}>
         <RadioButtonGroup
           name="sex"
-          options={[PetSex.Male, PetSex.Female, PetSex.NotSure]}
+          options={[
+            PetSexMapping.Male.label,
+            PetSexMapping.Female.label,
+            PetSexMapping.NotSure.label
+          ]}
           value={values.sex}
           onChange={handleChange}
         />
@@ -88,7 +77,14 @@ const ReportForm = ({
       <FormField label="Колір" name="color" required={true} margin={{ bottom: 'medium' }}>
         <RadioButtonGroup
           name="color"
-          options={[PetColor.Black, PetColor.Brown]}
+          options={[
+            PetColorMapping.Black.label,
+            PetColorMapping.Brown.label,
+            PetColorMapping.Ginger.label,
+            PetColorMapping.Grey.label,
+            PetColorMapping.White.label,
+            PetColorMapping.NotSure.label
+          ]}
           value={values.color}
           onChange={handleChange}
         />
@@ -107,10 +103,20 @@ const ReportForm = ({
       </FormField>
 
       <div>
-        <FormField label="Контактна особа" name="contactName" required={true} margin={{ bottom: 'medium' }}>
+        <FormField
+          label="Контактна особа"
+          name="contactName"
+          required={true}
+          margin={{ bottom: 'medium' }}
+        >
           <TextInput name="contactName" value={values.contactName} onChange={handleChange} />
         </FormField>
-        <FormField label="Номер телефону" name="contactPhone" required={true} margin={{ bottom: 'medium' }}>
+        <FormField
+          label="Номер телефону"
+          name="contactPhone"
+          required={true}
+          margin={{ bottom: 'medium' }}
+        >
           <TextInput
             name="contactPhone"
             value={values.contactPhone}
@@ -133,12 +139,12 @@ const ReportForm = ({
 
 export default withFormik<any, any>({
   mapPropsToValues: () => ({
-    type: null,
+    petType: null,
     sex: null,
     date: new Date().toISOString(),
     location: null,
     color: null,
-    imageUrl: null,
+    imageIds: null,
     description: '',
     contactName: '',
     contactPhone: ''
