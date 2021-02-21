@@ -24,6 +24,7 @@ const ReportsListingContainer: React.FC<IReportsListingContainerProps> = ({
     (state: RootState) => checkIfLoading(state, getReportsRoutine.TRIGGER),
     shallowEqual
   );
+  const reports = useSelector((state: RootState) => state.reports);
 
   const fetchReports = useCallback(() => {
     dispatch(getReportsRoutine({ type }));
@@ -36,7 +37,7 @@ const ReportsListingContainer: React.FC<IReportsListingContainerProps> = ({
   return (
     <LoaderWrapper loading={loading}>
       <Container className="mt-3 mb-4">
-        <ReportsListingProvider data={[]}>
+        <ReportsListingProvider data={reports}>
           <ReportsListingViewContainer />
         </ReportsListingProvider>
       </Container>

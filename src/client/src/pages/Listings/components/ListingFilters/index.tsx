@@ -6,17 +6,7 @@ import { pluralizeString } from '../../../../utils/pluralizeString.util';
 import { IBindingCallback1 } from '../../../../models/callback';
 import { IListingFilters } from '../../models/filters';
 
-enum PetTypes {
-  Dog = 'Собака',
-  Cat = 'Кішка',
-  All = 'Усі'
-}
-
-enum PetSex {
-  Male = 'Хлопець',
-  Female = 'Дівчина',
-  All = 'Усі'
-}
+import { PetTypeMapping, PetSexMapping, PetColorMapping } from '../../../../shared/constants';
 
 enum SortOrders {
   ByFoundDate = 'За датою знаходження',
@@ -26,7 +16,8 @@ enum SortOrders {
 const initialState = {
   sortOrder: null,
   type: null,
-  sex: null
+  sex: null,
+  color: null
 };
 
 interface IListingFilter {
@@ -80,7 +71,7 @@ const ListingsFilters: React.FC<IListingFilter> = ({
             id="type"
             name="type"
             plain={false}
-            options={[PetTypes.Cat, PetTypes.Dog, PetTypes.All]}
+            options={[PetTypeMapping.Cat.label, PetTypeMapping.Dog.label, PetTypeMapping.All.label]}
             value={filters.type}
             onChange={({ option }) => handleChange('type', option)}
           />
@@ -90,9 +81,30 @@ const ListingsFilters: React.FC<IListingFilter> = ({
             id="sex"
             name="sex"
             plain={false}
-            options={[PetSex.Male, PetSex.Female, PetSex.All]}
+            options={[
+              PetSexMapping.Male.label,
+              PetSexMapping.Female.label,
+              PetSexMapping.All.label
+            ]}
             value={filters.sex}
             onChange={({ option }) => handleChange('sex', option)}
+          />
+        </FormField>
+        <FormField htmlFor="color" name="color" label="Колір тварини">
+          <Select
+            id="color"
+            name="color"
+            plain={false}
+            options={[
+              PetColorMapping.Black.label,
+              PetColorMapping.Brown.label,
+              PetColorMapping.Ginger.label,
+              PetColorMapping.Grey.label,
+              PetColorMapping.White.label,
+              PetColorMapping.All.label
+            ]}
+            value={filters.color}
+            onChange={({ option }) => handleChange('color', option)}
           />
         </FormField>
       </Form>

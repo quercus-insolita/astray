@@ -1,43 +1,65 @@
+import { sortByDate } from '../../../utils/date.util';
+import { PetTypeMapping, PetSexMapping, PetColorMapping } from '../../../shared/constants';
+
 import { IReport } from '../../../models/report';
 import { IListingFilters } from '../models/filters';
-
-enum PetTypes {
-  Dog = 'Собака',
-  Cat = 'Кішка',
-  All = 'Усі'
-}
-
-enum PetSex {
-  Male = 'Хлопець',
-  Female = 'Дівчина',
-  All = 'Усі'
-}
 
 enum SortOrders {
   ByFoundDate = 'За датою знаходження',
   ByDateAdded = 'За датою заявки'
 }
 
+enum PetTypeDb {
+  Собака = 'dog',
+  Кішка = 'cat',
+  Усі = 'other'
+}
+
+enum PetSexDb {
+  Хлопець = 'male',
+  Дівчина = 'female',
+  Усі = 'notSure'
+}
+
+enum PetColorDb {
+  Чорний = 'black',
+  Коричневий = 'brown',
+  Рижий = 'ginger',
+  Сірий = 'grey',
+  Білий = 'white',
+  Усі = 'notSure'
+}
+
 export const filterReportsListing = (
   listings: IReport[],
-  { type, sex, sortOrder }: IListingFilters
+  { type, sex, color, sortOrder }: IListingFilters
 ): IReport[] => {
   let result = listings;
 
   if (type) {
-    if (type !== PetTypes.All) {
-      // todo: add sorting
+    if (type !== PetTypeMapping.All.label) {
+      result = listings.filter(item => item.petType === PetTypeDb[type]);
+    }
+  }
+  if (sex) {
+    if (sex !== PetSexMapping.All.label) {
+      result = listings.filter(item => item.sex === PetSexDb[sex]);
     }
   }
 
-  if (sex) {
-    if (sex !== PetSex.All) {
-      // todo: add sorting
+  if (color) {
+    if (color !== PetColorMapping.All.label) {
+      result = listings.filter(item => item.color === PetColorDb[color]);
     }
   }
 
   if (sortOrder) {
-    // todo: add sorting
+    if (sortOrder === SortOrders.ByFoundDate) {
+      result = sortByDate(result, 'date');
+    }
+    if (sortOrder === SortOrders.ByDateAdded) {
+      result = sortByDate(result, 'createdAt');
+    }
   }
 
   return result;
